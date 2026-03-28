@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="base::head"/>
+<title>UPI Payment</title>
+<style>
+    .upi-card {
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    }
+    .qr-wrapper {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 18px;
+        display: inline-block;
+        margin-bottom: 12px;
+    }
+    .upi-badge {
+        display: inline-flex;
+        align-items: center;
+        background: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 6px 14px;
+        margin: 4px;
+        font-weight: 500;
+        font-size: 0.92rem;
+    }
+    .step-badge {
+        width: 28px; height: 28px;
+        border-radius: 50%;
+        background: #0d6efd;
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 8px;
+        font-size: 0.85rem;
+        flex-shrink: 0;
+    }
+    .step-row {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+    }
+    .amount-display {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #198754;
+    }
+    .timer-text {
+        color: #dc3545;
+        font-size: 0.88rem;
+    }
+</style>
+</head>
+<body>
+<div th:replace="userheader::nav"></div>
+
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="card upi-card">
+
+                <!-- Header -->
+                <div class="card-header text-center py-3"
+                     style="background: linear-gradient(135deg,#0d6efd,#0a58ca); border-radius:16px 16px 0 0;">
+                    <h4 class="text-white mb-0">&#x1F4F1; Complete Your UPI Payment</h4>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <!-- Amount -->
+                    <div class="text-center mb-3">
+                        <div class="text-muted mb-1">Total Amount</div>
+                        <div class="amount-display">&#8377;<span th:text="${#numbers.formatDecimal(amount, 1, 'COMMA', 2, 'POINT')}"></span></div>
+                        <div class="text-muted" th:text="${description}"></div>
+                    </div>
+
+                    <hr/>
+
+                    <!-- QR Code Section -->
+                    <div class="text-center mb-3">
+                        <div class="qr-wrapper">
+                            <img th:src="'data:image/png;base64,' + ${qrCode}"
+                                 alt="UPI QR Code"
+                                 width="220" height="220"
+                                 style="display:block;"/>
+                        </div>
+                        <div class="small text-muted mb-2">Scan with any UPI app</div>
+
+                        <!-- Supported apps -->
+                        <div>
+                            <span class="upi-badge">&#x1F7E2; GPay</span>
+                            <span class="upi-badge">&#x1F7E3; PhonePe</span>
+                            <span class="upi-badge">&#x1F535; Paytm</span>
+                            <span class="upi-badge">&#x26AA; BHIM</span>
+                        </div>
+                    </div>
+
+                    <!-- Steps -->
+                    <div class="bg-light rounded p-3 mb-3">
+                        <div class="fw-bold mb-2">How to pay:</div>
+                        <div class="step-row">
+                            <span class="step-badge">1</span>
+                            <span>Open GPay / PhonePe / Paytm or any UPI app</span>
+                        </div>
+                        <div class="step-row">
+                            <span class="step-badge">2</span>
+                            <span>Scan the QR code above or search UPI ID manually</span>
+                        </div>
+                        <div class="step-row">
+                            <span class="step-badge">3</span>
+                            <span>Pay <strong>&#8377;<span th:text="${amount}"></span></strong> and note your UTR number</span>
+                        </div>
+                        <div class="step-row">
+                            <span class="step-badge">4</span>
+                            <span>Enter the UTR number below and click <strong>Confirm</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- UTR Confirmation Form -->
+                    <form th:action="@{/pay/confirm}" method="post">
+                        <input type="hidden" name="amount" th:value="${amount}"/>
+                        <input type="hidden" name="description" th:value="${description}"/>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                UTR / Transaction Reference Number
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text"
+                                   class="form-control form-control-lg"
+                                   name="utrNumber"
+                                   placeholder="Enter 12-digit UTR number"
+                                   pattern="[0-9A-Za-z]{10,25}"
+                                   required
+                                   autocomplete="off"/>
+                            <div class="form-text">
+                                Find the UTR in your UPI app under transaction history.
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                &#x2714; Confirm Payment
+                            </button>
+                            <a th:href="@{/pay/cancel}" class="btn btn-outline-danger">
+                                &#x2715; Cancel Payment
+                            </a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

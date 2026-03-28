@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base::head"/>
+<title>Place Order - MediCare</title>
+</head>
+<body>
+<div th:replace="userheader::nav"></div>
+
+<div th:if="${session.msg}">
+  <div class="alert alert-flash alert-success alert-dismissible fade show m-0" role="alert" th:text="${session.msg}">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  <th:block th:text="${#session.removeAttribute('msg')}"></th:block>
+</div>
+
+<div class="page-header">
+  <div class="container">
+    <h2><i class="bi bi-bag-check me-2"></i>Place Your Order</h2>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a th:href="@{/Customerwelcome}">Dashboard</a></li>
+      <li class="breadcrumb-item"><a th:href="@{/ViewAllMedicine}">Medicines</a></li>
+      <li class="breadcrumb-item active">Checkout</li>
+    </ol></nav>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card med-card">
+        <div class="card-header py-3" style="background:linear-gradient(90deg,#1565C0,#0288D1);">
+          <h5 class="text-white mb-0 fw-bold"><i class="bi bi-person-lines-fill me-2"></i>Delivery Information</h5>
+        </div>
+        <div class="card-body p-4">
+          <form th:action="@{/buyNow}" method="post" enctype="multipart/form-data">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label"><i class="bi bi-person me-1 text-primary"></i>Full Name <span class="text-danger">*</span></label>
+                <input type="text" name="buyer_name" th:value="${name}" class="form-control" placeholder="Your full name" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label"><i class="bi bi-geo-alt me-1 text-primary"></i>Delivery Address <span class="text-danger">*</span></label>
+                <textarea name="buyer_address" class="form-control" rows="2" placeholder="Full delivery address with pincode" required></textarea>
+              </div>
+              <div class="col-12">
+                <label class="form-label"><i class="bi bi-telephone me-1 text-primary"></i>Phone Number <span class="text-danger">*</span></label>
+                <input type="number" name="buyer_phoneNo" class="form-control" placeholder="10-digit mobile number" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label"><i class="bi bi-hash me-1 text-primary"></i>Quantity <span class="text-danger">*</span></label>
+                <input type="number" name="quantity" class="form-control" placeholder="Enter quantity" min="1" required>
+              </div>
+              <div class="col-12 d-flex gap-2 mt-2">
+                <button type="submit" class="btn btn-brand flex-grow-1"><i class="bi bi-check-circle me-2"></i>Confirm Order</button>
+                <a th:href="@{/ViewAllMedicine}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Back</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="text-center"><p class="mb-0 small">&copy; 2026 MediCare. All rights reserved.</p></footer>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base::head"/>
+<title>My Cart - MediCare</title>
+</head>
+<body>
+<div th:replace="userheader::nav"></div>
+
+<div th:if="${session.msg}">
+  <div class="alert alert-flash alert-success alert-dismissible fade show m-0" role="alert" th:text="${session.msg}">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  <th:block th:text="${#session.removeAttribute('msg')}"></th:block>
+</div>
+
+<div class="page-header">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div>
+      <h2><i class="bi bi-cart3 me-2"></i>My Cart</h2>
+      <nav aria-label="breadcrumb"><ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/Customerwelcome}">Dashboard</a></li>
+        <li class="breadcrumb-item active">My Cart</li>
+      </ol></nav>
+    </div>
+    <a th:href="@{/ViewAllMedicine}" class="btn btn-warning fw-bold"><i class="bi bi-plus-circle me-2"></i>Continue Shopping</a>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="card med-card">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+      <h5 class="mb-0 fw-bold text-primary"><i class="bi bi-bag me-2"></i>Cart Items</h5>
+      <span class="badge bg-primary rounded-pill" th:text="${#lists.size(med)} + ' items'"></span>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-med table-hover mb-0">
+          <thead><tr>
+            <th>Image</th><th>Medicine</th><th>Price (₹)</th><th>Seller</th><th>Availability</th><th>Action</th>
+          </tr></thead>
+          <tbody>
+          <tr th:each="m : ${med}">
+            <td>
+              <img th:if="${m.image != null}" th:src="${'data:image/jpeg;base64,' + m.image}" class="img-med" style="width:60px;height:60px;" alt="">
+              <div th:unless="${m.image != null}" class="bg-light rounded d-flex align-items-center justify-content-center" style="width:60px;height:60px;"><i class="bi bi-capsule text-secondary"></i></div>
+            </td>
+            <td class="fw-semibold" th:text="${m.medicine_name}"></td>
+            <td><span class="fw-bold text-success">₹<span th:text="${m.price}"></span></span></td>
+            <td class="text-muted small" th:text="${m.seller_email}"></td>
+            <td>
+              <span th:if="${m.quantity > 0}" class="badge-status-delivered">In Stock</span>
+              <span th:unless="${m.quantity > 0}" class="badge-status-process">Out of Stock</span>
+            </td>
+            <td>
+              <div class="d-flex gap-1">
+                <a class="btn btn-sm btn-outline-danger" th:href="@{/deleteCartItem/{id}/(id=${m.medicine_id})}"><i class="bi bi-trash me-1"></i>Remove</a>
+                <a th:if="${m.quantity > 0}" class="btn btn-sm btn-brand" th:href="@{/proceedToBuy/{id}/(id=${m.medicine_id})}"><i class="bi bi-bag me-1"></i>Buy Now</a>
+              </div>
+            </td>
+          </tr>
+          <tr th:if="${#lists.isEmpty(med)}"><td colspan="6" class="text-center py-5 text-muted"><i class="bi bi-cart-x fs-1 d-block mb-2"></i>Your cart is empty. <a th:href="@{/ViewAllMedicine}">Start shopping.</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="text-center"><p class="mb-0 small">&copy; 2026 MediCare. All rights reserved.</p></footer>
+</body>
+</html>
