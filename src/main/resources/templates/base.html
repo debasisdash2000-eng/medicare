@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.com">
+
+<head th:fragment="head">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --brand-primary: #1565C0;
+            --brand-secondary: #0288D1;
+            --brand-accent: #00BCD4;
+            --brand-success: #2E7D32;
+            --brand-bg: #F0F4F8;
+            --card-shadow: 0 2px 16px rgba(21,101,192,0.10);
+            --nav-bg: linear-gradient(90deg, #0D47A1 0%, #1565C0 60%, #0288D1 100%);
+        }
+        body { background: var(--brand-bg); font-family: 'Segoe UI', sans-serif; }
+        .navbar-medic {
+            background: var(--nav-bg) !important;
+            box-shadow: 0 2px 12px rgba(13,71,161,0.18);
+        }
+        .navbar-medic .navbar-brand { font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; color: #fff !important; }
+        .navbar-medic .nav-link { color: rgba(255,255,255,0.88) !important; font-weight: 500; transition: color 0.2s; }
+        .navbar-medic .nav-link:hover { color: #fff !important; }
+        .navbar-medic .dropdown-menu { border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border-radius: 10px; }
+        .navbar-medic .dropdown-item { padding: 8px 20px; font-size: 0.93rem; }
+        .navbar-medic .dropdown-item:hover { background: #e3f0ff; color: var(--brand-primary); }
+        .page-header {
+            background: linear-gradient(135deg, #1565C0 0%, #0288D1 100%);
+            color: white; padding: 22px 0 18px; margin-bottom: 28px;
+            box-shadow: 0 2px 8px rgba(13,71,161,0.12);
+        }
+        .page-header h2 { font-weight: 700; margin: 0; }
+        .page-header .breadcrumb { background: transparent; margin: 0; padding: 4px 0 0; }
+        .page-header .breadcrumb-item a { color: rgba(255,255,255,0.8); text-decoration: none; }
+        .page-header .breadcrumb-item.active { color: rgba(255,255,255,0.65); }
+        .page-header .breadcrumb-item+.breadcrumb-item::before { color: rgba(255,255,255,0.6); }
+        .med-card { border: none; border-radius: 14px; box-shadow: var(--card-shadow); }
+        .med-card .card-header { border-radius: 14px 14px 0 0 !important; font-weight: 600; }
+        .table-med thead th { background: var(--brand-primary); color: white; border: none; font-weight: 600; padding: 12px 16px; }
+        .table-med tbody tr:hover { background: #e8f0fe; }
+        .table-med td { vertical-align: middle; padding: 10px 16px; }
+        .badge-status-process { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; padding: 5px 12px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; }
+        .badge-status-shipped { background: #e3f2fd; color: #0277bd; border: 1px solid #90caf9; padding: 5px 12px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; }
+        .badge-status-delivered { background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; padding: 5px 12px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; }
+        .form-label { font-weight: 600; color: #374151; }
+        .form-control:focus { border-color: var(--brand-secondary); box-shadow: 0 0 0 0.2rem rgba(2,136,209,0.18); }
+        .btn-brand { background: var(--brand-primary); color: white; border: none; font-weight: 600; }
+        .btn-brand:hover { background: #0D47A1; color: white; }
+        .alert-flash { border-radius: 10px; border: none; font-weight: 500; }
+        .img-med { border-radius: 8px; object-fit: cover; border: 1px solid #e0e0e0; }
+        .dash-card { border: none; border-radius: 14px; box-shadow: var(--card-shadow); transition: transform 0.18s, box-shadow 0.18s; cursor: pointer; text-decoration: none; }
+        .dash-card:hover { transform: translateY(-4px); box-shadow: 0 6px 24px rgba(21,101,192,0.18); }
+        .dash-card .dash-icon { font-size: 2.4rem; margin-bottom: 10px; }
+        footer { background: #0D47A1; color: rgba(255,255,255,0.8); padding: 18px 0; margin-top: 50px; }
+        .stock-low { color: #c62828; font-weight: 700; }
+        .stock-ok { color: #2e7d32; font-weight: 700; }
+    </style>
+</head>
+
+<body th:fragment="nav">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<nav class="navbar navbar-expand-lg navbar-medic">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand" th:href="@{/}">
+            <i class="bi bi-capsule-pill me-2"></i>MediCare
+        </a>
+        <button class="navbar-toggler border-light" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" th:href="@{/AllMedicine}"><i class="bi bi-grid me-1"></i>Medicines</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-info-circle me-1"></i>About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-telephone me-1"></i>Contact</a></li>
+            </ul>
+            <div class="d-flex gap-2">
+                <a th:href="@{/login}" class="btn btn-outline-light btn-sm fw-600"><i class="bi bi-box-arrow-in-right me-1"></i>Login</a>
+                <a th:href="@{/signup}" class="btn btn-warning btn-sm fw-bold"><i class="bi bi-person-plus me-1"></i>Register</a>
+            </div>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

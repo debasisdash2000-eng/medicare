@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base::head"/>
+<title>My Orders - MediCare</title>
+</head>
+<body>
+<div th:replace="userheader::nav"></div>
+
+<div class="page-header">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div>
+      <h2><i class="bi bi-bag-check me-2"></i>My Orders</h2>
+      <nav aria-label="breadcrumb"><ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/Customerwelcome}">Dashboard</a></li>
+        <li class="breadcrumb-item active">My Orders</li>
+      </ol></nav>
+    </div>
+    <a th:href="@{/ViewAllMedicine}" class="btn btn-warning fw-bold"><i class="bi bi-grid me-2"></i>Shop More</a>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="card med-card">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+      <h5 class="mb-0 fw-bold text-primary"><i class="bi bi-list-check me-2"></i>Order History</h5>
+      <span class="badge bg-primary rounded-pill" th:text="${#lists.size(orderdetails)} + ' orders'"></span>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-med table-hover mb-0">
+          <thead><tr>
+            <th>Order ID</th><th>Billing Name</th><th>Address</th><th>Medicine</th><th>Seller</th><th>Qty</th><th>Bill (₹)</th><th>Status</th>
+          </tr></thead>
+          <tbody>
+          <tr th:each="order : ${orderdetails}">
+            <td><span class="badge bg-primary">#<span th:text="${order.order_id}"></span></span></td>
+            <td class="fw-semibold" th:text="${order.buyer_name}"></td>
+            <td class="text-muted small" th:text="${order.buyer_address}"></td>
+            <td th:text="${T(MedicalEcommerce.controller.OrderController).medname(order.product)}"></td>
+            <td class="text-muted small" th:text="${T(MedicalEcommerce.controller.OrderController).sellername(order.sellerID)}"></td>
+            <td th:text="${order.quantity}"></td>
+            <td><span class="fw-bold text-success">₹<span th:text="${order.total_bill}"></span></span></td>
+            <td>
+              <span th:if="${order.delivery_status == 'Delivered'}" class="badge-status-delivered"><i class="bi bi-check-circle me-1"></i>Delivered</span>
+              <span th:if="${order.delivery_status == 'On Process'}" class="badge-status-process"><i class="bi bi-clock me-1"></i>On Process</span>
+              <span th:if="${order.delivery_status == 'Shipped'}" class="badge-status-shipped"><i class="bi bi-truck me-1"></i>Shipped</span>
+            </td>
+          </tr>
+          <tr th:if="${#lists.isEmpty(orderdetails)}"><td colspan="8" class="text-center py-5 text-muted"><i class="bi bi-inbox fs-1 d-block mb-2"></i>No orders yet. <a th:href="@{/ViewAllMedicine}">Start shopping.</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="text-center"><p class="mb-0 small">&copy; 2026 MediCare. All rights reserved.</p></footer>
+</body>
+</html>

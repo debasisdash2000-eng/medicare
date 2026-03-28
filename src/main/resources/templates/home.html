@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base::head"/>
+<title>MediCare - Your Online Pharmacy</title>
+<style>
+  .hero { background: linear-gradient(135deg,#0D47A1 0%,#0288D1 60%,#00BCD4 100%); min-height: 85vh; display:flex; align-items:center; }
+  .hero h1 { font-size: 3rem; font-weight: 800; color: white; }
+  .hero p { font-size: 1.2rem; color: rgba(255,255,255,0.85); }
+  .feature-icon { font-size: 2.5rem; margin-bottom: 16px; }
+  .feature-card { border: none; border-radius: 16px; box-shadow: 0 2px 16px rgba(21,101,192,0.10); padding: 32px 24px; height: 100%; transition: transform 0.2s; }
+  .feature-card:hover { transform: translateY(-4px); }
+</style>
+</head>
+<body>
+<div th:replace="base::nav"></div>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <h1><i class="bi bi-capsule-pill me-3"></i>MediCare</h1>
+        <p class="mt-3 mb-4">Your trusted online pharmacy. Order medicines safely, track deliveries in real time, and get the care you need — from the comfort of home.</p>
+        <div class="d-flex gap-3">
+          <a th:href="@{/AllMedicine}" class="btn btn-warning btn-lg fw-bold px-4"><i class="bi bi-grid me-2"></i>Browse Medicines</a>
+          <a th:href="@{/login}" class="btn btn-outline-light btn-lg px-4"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center d-none d-lg-block">
+        <i class="bi bi-hospital text-white" style="font-size:12rem;opacity:0.15;"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<div class="container py-5">
+  <h2 class="text-center fw-bold text-primary mb-2">Why Choose MediCare?</h2>
+  <p class="text-center text-muted mb-5">Everything you need for safe and convenient medicine shopping.</p>
+  <div class="row g-4">
+    <div class="col-md-3">
+      <div class="feature-card text-center">
+        <div class="feature-icon text-primary"><i class="bi bi-shield-check"></i></div>
+        <h5 class="fw-bold">Verified Sellers</h5>
+        <p class="text-muted small">All our sellers are verified and trusted pharmacies.</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="feature-card text-center">
+        <div class="feature-icon text-success"><i class="bi bi-truck"></i></div>
+        <h5 class="fw-bold">Fast Delivery</h5>
+        <p class="text-muted small">Real-time tracking with quick doorstep delivery.</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="feature-card text-center">
+        <div class="feature-icon text-warning"><i class="bi bi-qr-code"></i></div>
+        <h5 class="fw-bold">UPI Payments</h5>
+        <p class="text-muted small">Pay securely via GPay, PhonePe, Paytm and more.</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="feature-card text-center">
+        <div class="feature-icon text-info"><i class="bi bi-headset"></i></div>
+        <h5 class="fw-bold">24/7 Support</h5>
+        <p class="text-muted small">Our team is always available to help you.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div style="background:#E3F2FD; padding: 60px 0;">
+  <div class="container text-center">
+    <h3 class="fw-bold text-primary">Ready to get started?</h3>
+    <p class="text-muted mb-4">Join thousands of customers who trust MediCare for their medicine needs.</p>
+    <a th:href="@{/signup}" class="btn btn-brand btn-lg px-5 me-3"><i class="bi bi-person-plus me-2"></i>Register as Customer</a>
+    <a th:href="@{/AllMedicine}" class="btn btn-outline-primary btn-lg px-5"><i class="bi bi-grid me-2"></i>Browse Medicines</a>
+  </div>
+</div>
+
+<footer class="text-center"><p class="mb-0 small">&copy; 2026 MediCare. All rights reserved.</p></footer>
+</body>
+</html>

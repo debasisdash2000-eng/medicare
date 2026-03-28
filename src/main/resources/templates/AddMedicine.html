@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base::head"/>
+<title>Add Medicine - MediCare</title>
+</head>
+<body>
+<div th:replace="userheader::nav"></div>
+
+<div th:if="${session.msg}">
+  <div class="alert alert-flash alert-success alert-dismissible fade show m-0" role="alert" th:text="${session.msg}">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  <th:block th:text="${#session.removeAttribute('msg')}"></th:block>
+</div>
+
+<div class="page-header">
+  <div class="container">
+    <h2><i class="bi bi-plus-circle me-2"></i>Add New Medicine</h2>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+      <li class="breadcrumb-item"><a th:href="@{/Sellerwelcome}">Dashboard</a></li>
+      <li class="breadcrumb-item"><a th:href="@{/ViewSellerStock}">My Stock</a></li>
+      <li class="breadcrumb-item active">Add Medicine</li>
+    </ol></nav>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="card med-card">
+        <div class="card-header py-3" style="background:linear-gradient(90deg,#1565C0,#0288D1);">
+          <h5 class="text-white mb-0 fw-bold"><i class="bi bi-capsule-pill me-2"></i>Medicine Details</h5>
+        </div>
+        <div class="card-body p-4">
+          <form th:action="@{/saveMedicine}" method="post" enctype="multipart/form-data">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label"><i class="bi bi-capsule me-1 text-primary"></i>Medicine Name <span class="text-danger">*</span></label>
+                <input type="text" name="medicine_name" class="form-control" placeholder="e.g. Paracetamol 500mg" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label"><i class="bi bi-eyedropper me-1 text-primary"></i>Composition <span class="text-danger">*</span></label>
+                <input type="text" name="medicine_composition" class="form-control" placeholder="e.g. Paracetamol 500mg" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label"><i class="bi bi-building me-1 text-primary"></i>Manufacturing Company <span class="text-danger">*</span></label>
+                <input type="text" name="manufacturing_company" class="form-control" placeholder="e.g. Sun Pharma" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label"><i class="bi bi-currency-rupee me-1 text-success"></i>Price (₹) <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text">₹</span>
+                  <input type="number" name="price" class="form-control" placeholder="0.00" min="0" step="0.01" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label"><i class="bi bi-boxes me-1 text-primary"></i>Quantity in Stock <span class="text-danger">*</span></label>
+                <input type="number" name="quantity" class="form-control" placeholder="e.g. 100" min="0" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label"><i class="bi bi-info-circle me-1 text-primary"></i>About / Description</label>
+                <textarea rows="3" class="form-control" name="about" placeholder="Enter medicine usage, dosage, side effects..."></textarea>
+              </div>
+              <div class="col-12">
+                <label class="form-label"><i class="bi bi-image me-1 text-primary"></i>Product Image</label>
+                <input type="file" name="file" class="form-control" accept="image/*">
+                <div class="form-text">Upload a clear image (JPG, PNG). Max 5MB.</div>
+              </div>
+              <div class="col-12 d-flex gap-2 mt-2">
+                <button type="submit" class="btn btn-brand flex-grow-1"><i class="bi bi-check-circle me-2"></i>Save Medicine</button>
+                <button type="reset" class="btn btn-outline-secondary"><i class="bi bi-x-circle me-1"></i>Reset</button>
+                <a th:href="@{/ViewSellerStock}" class="btn btn-outline-primary"><i class="bi bi-list me-1"></i>View Stock</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="text-center"><p class="mb-0 small">&copy; 2026 MediCare. All rights reserved.</p></footer>
+</body>
+</html>
